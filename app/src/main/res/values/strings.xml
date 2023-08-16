@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NoteLessonDB</string>
+    <string name="first_fragment_label">Notes</string>
+    <string name="second_fragment_label">Notes detail</string>
+</resources>
