@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <permission android:name="kz.azamat.notelessondb.READ_NOTES"/>
 
     <application
-        android:name=".NoteApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NoteLessonDB"
-        tools:targetApi="31">
+        android:theme="@style/Theme.NoteLessonDB">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,13 +25,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <provider
-            android:authorities="kz.azamat.notelessondb.NoteLessonDB"
-            android:name=".contentprovider.NotesContentProvider"
-            android:exported="true"
-            />
-
     </application>
 
 </manifest>

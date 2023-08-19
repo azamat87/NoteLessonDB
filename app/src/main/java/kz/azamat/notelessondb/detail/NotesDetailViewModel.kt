@@ -11,9 +11,10 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kz.azamat.notelessondb.Note
 import kz.azamat.notelessondb.NotesRepository
+import kz.azamat.notelessondb.NotesSQLiteRepository
 import java.util.*
 
-class NotesDetailViewModel(private val noteId: Long?, private val repository: NotesRepository) : ViewModel() {
+class NotesDetailViewModel(private val noteId: Long?, private val repository: NotesSQLiteRepository) : ViewModel() {
 
     private val _viewState = MutableStateFlow<Note?>(null)
     val viewState: Flow<Note> get() = _viewState.filterNotNull()
@@ -46,7 +47,7 @@ class NotesDetailViewModel(private val noteId: Long?, private val repository: No
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return NotesDetailViewModel(
                     noteId = noteId,
-                    repository = NotesRepository
+                    repository = NotesSQLiteRepository
                 ) as T
             }
         }
