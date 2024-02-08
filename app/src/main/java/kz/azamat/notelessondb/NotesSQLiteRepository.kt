@@ -21,6 +21,10 @@ object NotesSQLiteRepository {
         db.update(note)
     }
 
+    suspend fun deleteNote(note: Note) {
+        db.delete(note)
+    }
+
     suspend fun get(id: Long): Note? = db.getNote(id)
 
 }

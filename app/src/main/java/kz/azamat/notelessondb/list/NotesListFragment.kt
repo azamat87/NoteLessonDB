@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import kz.azamat.notelessondb.Note
 import kz.azamat.notelessondb.R
 import kz.azamat.notelessondb.databinding.FragmentNotesListBinding
 import kz.azamat.notelessondb.pref.PreferencesProvider
@@ -21,9 +22,15 @@ class NotesListFragment : Fragment() {
 
     private val viewModel: NotesListViewModel by viewModels()
     private var _binding: FragmentNotesListBinding? = null
-    private val adapter = NotesListAdapter { note ->
-        openDetails(note.id)
-    }
+    private val adapter = NotesListAdapter(object : NotesListAdapter.NoteItemListener {
+        override fun onNoteClick(note: Note) {
+            openDetails(note.id)
+        }
+
+        override fun deleteNote(note: Note) {
+            viewModel.delete(note)
+        }
+    })
 
     private val binding get() = _binding!!
 
@@ -35,7 +42,6 @@ class NotesListFragment : Fragment() {
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,16 +58,12 @@ class NotesListFragment : Fragment() {
                 }
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                PreferencesProvider.getNoteCount().collect { count ->
-                    binding.noteCountTv.text = "Note count $count"
-                }
-            }
-        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getNotes()
+    }
 
     private fun openDetails(noteId: Long?) {
         val args = noteId?.let { bundleOf("noteId" to noteId) }

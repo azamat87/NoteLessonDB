@@ -6,22 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".list.NotesListFragment">
 
-    <TextView
-        android:id="@+id/note_count_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        tools:text="1"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notes_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/item_note" />

@@ -109,4 +109,15 @@ class DB(
         )
     }
 
+    suspend fun delete(note: Note) = withContext(ioDispatcher) {
+        val clause = "${BaseColumns._ID} = ?"
+        val args = arrayOf("${note.id}")
+
+        db.delete(
+            NotesDbContract.TABLE_NAME,
+            clause,
+            args
+        )
+    }
+
 }

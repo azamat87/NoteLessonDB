@@ -50,7 +50,6 @@ class NotesDetailFragment : Fragment(R.layout.fragment_notes_detail) {
         val title = binding.titleEt.text.toString()
         val note = binding.noteEt.text.toString()
         viewModel.onScreenClose(title, note)
-
         _binding = null
     }
 

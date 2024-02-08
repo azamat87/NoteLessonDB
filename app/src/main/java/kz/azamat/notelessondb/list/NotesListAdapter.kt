@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.azamat.notelessondb.Note
 import kz.azamat.notelessondb.databinding.ItemNoteBinding
 
-class NotesListAdapter (val onNoteClick: (Note) -> Unit
-) : ListAdapter<Note, NotesListAdapter.ViewHolder>(callback) {
+class NotesListAdapter (val noteListener: NoteItemListener) : ListAdapter<Note, NotesListAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,10 +24,13 @@ class NotesListAdapter (val onNoteClick: (Note) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(note: Note) {
-            binding.tieleTv.setText(note.title)
-            binding.notesTv.setText(note.text)
+            binding.titleTv.text = note.title
+            binding.notesTv.text = note.text
             binding.root.setOnClickListener {
-                onNoteClick.invoke(note)
+                noteListener.onNoteClick(note)
+            }
+            binding.deleteIcon.setOnClickListener {
+                noteListener.deleteNote(note)
             }
         }
     }
@@ -42,5 +44,10 @@ class NotesListAdapter (val onNoteClick: (Note) -> Unit
                 oldItem == newItem
 
         }
+    }
+
+    interface NoteItemListener {
+        fun onNoteClick(note: Note)
+        fun deleteNote(note: Note)
     }
 }

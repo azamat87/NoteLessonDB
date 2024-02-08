@@ -14,10 +14,17 @@ class NotesListViewModel(private val repository: NotesSQLiteRepository = NotesSQ
     private val _viewState = MutableStateFlow<List<Note>>(emptyList())
     val viewState: Flow<List<Note>> get() = _viewState
 
-    init {
+    fun getNotes() {
         viewModelScope.launch {
             val notes = repository.getAllNotes()
             _viewState.value = notes
+        }
+    }
+
+    fun delete(note: Note) {
+        viewModelScope.launch {
+            repository.deleteNote(note)
+            getNotes()
         }
     }
 }

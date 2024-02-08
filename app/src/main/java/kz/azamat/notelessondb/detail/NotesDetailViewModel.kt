@@ -29,15 +29,14 @@ class NotesDetailViewModel(private val noteId: Long?, private val repository: No
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun onScreenClose(title: String, note: String) {
         viewModelScope.launch {
             val currentNote = _viewState.value
             if (currentNote == null) {
-                repository.create(title, note)
+                if (title.isNotEmpty() || note.isNotEmpty())
+                    repository.create(title, note)
             } else {
-                repository.update(currentNote.copy(title = title, text = note, date = Date())
-                )
+                repository.update(currentNote.copy(title = title, text = note, date = Date()))
             }
         }
     }
